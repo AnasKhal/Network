@@ -1,62 +1,81 @@
-#include <cs50.h>
 #include <stdio.h>
+#include <cs50.h>
 #include <string.h>
-#include <ctype.h>
 #include <stdlib.h>
+#include <ctype.h>
 
-int main(int argc, string argv[1])
+bool isitaletter (string test);
+
+int main(int argc, string argv[])
 {
-    if (argc != 2)  //ensure user passes 2 cmd-line args
+    // checking for only letters
+    if (argc != 2 || isitaletter(argv[1]) == false)
     {
-        printf("Usage: ./caesar k\n");
-        return 1;   //if they don't pass 2 args, exit the program with error message 1
+        printf("Check if all alphabetic.. \n");
+        return 1;
     }
-    for (int i = 0, n = strlen(argv[1]); i < n; i++)
+    else
     {
-        if (!isalpha(argv[1][i]))
-        {
-            printf("Usage: ./vigenere k\n");
-            return 1;
-        }
-    }
-    printf("plaintext: ");
-    string p = get_string();    //get a string(key) from the user, store it in p
-    if (p != NULL)  //ensure p is not null
-    {
-        int j = 0;
-        string key = argv[1];
+        string a = argv[1];
+
+
+        printf("type a string: ");
+        string p = get_string();
+
         printf("ciphertext: ");
-        for (int i = 0, n = strlen(p); i < n; i++)  //iterate over the string p
+
+
+        for (int i = 0, letter = 0; i < strlen(p); i++)
         {
-            if (isalpha(p[i]))    //if string p is alphabetic, continue
+            if (isalpha(p[i]))
             {
-                if (islower(p[i]) && islower(key[j]))    //if chars in p are lower & key is lower, print lower
+
+                letter = letter % strlen(argv[1]);
+
+                // four formulas based on upeercase and lowercase
+                char formula1 = (p[i] - 'A' + a[letter] - 'A') % 26 + 'A';
+                char formula2 = (p[i] - 'a' + a[letter] - 'A') % 26 + 'a';
+                char formula3 = (p[i] - 'A' + a[letter] - 'a') % 26 + 'A';
+                char formula4 = (p[i] - 'a' + a[letter] - 'a') % 26 + 'a';
+
+                // Using each of the 4 formulas above... should refactor in the future.
+                if (isupper(p[i]) && isupper(a[i % (strlen(argv[1]))]))
                 {
-                    printf("%c", (p[i] - 97 + key[j] - 97) % 26 + 97);
-                    j++;
+                    printf("%c", formula1);
                 }
-                else if (isupper(p[i]) && isupper(key[j]))    //if chars in p are upper & key is lower, print upper
+                else if (islower(p[i]) && isupper(a[i % (strlen(argv[1]))]))
                 {
-                    printf("%c", (p[i] - 65 + key[j] - 65) % 26 + 65);
-                    j++;
+                    printf("%c", formula2);
                 }
-                else if (islower(p[i]) && isupper(key[j]))   //if chars in p are lower & key is upper, print lower
+                else if (isupper(p[i]) && islower(a[i % (strlen(argv[1]))]))
                 {
-                    printf("%c", (p[i] - 97 + key[j] - 65) % 26 + 97);
-                    j++;
+                    printf("%c", formula3);
                 }
-                else if (isupper(p[i]) && islower(key[j]))     //if chars in p are upper & key is lower, print upper
+                else if (islower(p[i]) && islower(a[i % (strlen(argv[1]))]))
                 {
-                    printf("%c", (p[i] - 65 + key[j] - 97) % 26 + 65);
-                    j++;
+                    printf("%c", formula4);
                 }
+                letter++;
             }
-            else    //otherwise print special chars as is
+            else
             {
                 printf("%c", p[i]);
             }
         }
+        printf("\n");
+        return 0;
     }
-    printf("\n");   //print a newline and exit the program with code 0
-    return 0;
+}
+
+
+bool isitaletter(string test)
+{
+    for (int i = 0 ; i < strlen(test) ; i++)
+    {
+        if ( !isalpha(test[i]) )
+        {
+            return false;
+        }
+    }
+    return true;
 }
