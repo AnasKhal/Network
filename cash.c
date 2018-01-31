@@ -7,9 +7,7 @@ int main (void)
 {
  float money;
 
-//ask user for positive amout
 do
-
 {
     money = get_float("How much is owed: ");
 }
@@ -20,16 +18,16 @@ int cents = round(money * 100);
 
 int coins=0;
 
-while ( cents >= 10 )
-
-{
-    cents -= 10;
-    coins++;
-}
 while ( cents >= 25 )
 
 {
     cents -= 25;
+    coins++;
+}
+while ( cents >= 10 )
+
+{
+    cents -= 10;
     coins++;
 }
 while ( cents >= 5 )
@@ -44,7 +42,6 @@ while ( cents >= 1 )
     cents -= 1;
     coins++;
 }
-
 
 printf("%i" , coins);
 }
