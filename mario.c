@@ -10,18 +10,34 @@ int main(void)
   }
 
   while (n < 0 || n > 23);
-
-  for (int i = 0; i < n; i++)
+//print evry line
+   for (int l = 0; l < n;l++)
     {
-          for (int j = 0; j < n - 1 - i + 1; j++ )
-          {
-          printf(" ");
+        //print spaces for left
+        int i = 0;
+        while(i < n-l-1)
+        {
+            printf(" ");
+            i++;
+        }
 
-          }
-for (int j = 0; j < i + 2 ; j++ )
-{
-    printf("#");
-}
-printf("\n");
-}
+        //on left
+        int j = 0;
+        while(j < l+1)
+        {
+            printf("#");
+            j++;
+        }
+        //2 spaces
+        printf("  ");
+        //on right
+        int h = 0;
+        while(h < l+1)
+        {
+            printf("#");
+            h++;
+        }
+        // new line
+        printf("\n");
+    }
 }
