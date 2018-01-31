@@ -1,45 +1,53 @@
-#include <cs50.h>
 #include <stdio.h>
+#include <cs50.h>
 #include <string.h>
-#include <ctype.h>
 #include <stdlib.h>
+#include <ctype.h>
+
 
 int main(int argc, string argv[])
 {
-    if (argc != 2)
+    if (argc == 1)
     {
+        printf("yell\n");
         return 1;
     }
 
-    int x = atoi(argv[1]);
-    //printf("integer is %i\n", x);
-
-    printf("plaintext: ");
-    string ptext = get_string();
-    //printf("text is: %s\n", ptext);
-
-    for (int i = 0, n = strlen(ptext); i < n; i++)
+    else if (argc == 2)
     {
-        if (ptext[i] == ' ')
+
+        string a = argv[1];
+        int k = atoi(a);
+
+        printf("Please enter a string: \n");
+        string p = get_string();
+
+        printf("ciphertext: ");
+        for (int i = 0; i < strlen(p); i++)
         {
-            ptext[i] = ptext[i];
-        }
-        else if (isalpha(ptext[i]))
-        {
-            if (isupper(ptext[i]))
+
+            // for uppercase letters
+            char formula1 = (p[i] - 65 + k) % 26 + 65;
+
+            // for lowercase letters
+            char formula2 = (p[i] - 97 + k) % 26 + 97;
+
+            // printing appropriate uppercase, lowercase or other character
+            if (isupper(p[i]))
             {
-                ptext[i] = (ptext[i] - 65 + x) % 26 + 65;
+                printf("%c", formula1);
             }
-             if (islower(ptext[i]))
+            else if (islower(p[i]))
             {
-                ptext[i] = (ptext[i] - 97 + x) % 26 + 97;
+                printf("%c", formula2);
+            }
+            else
+            {
+                printf("%c", p[i]);
             }
         }
-        else
-        {
-            ptext[i] = ptext[i];
-        }
+
+        printf("\n");
+        return 0;
     }
-    printf("ciphertext: %s", ptext);
-    printf("\n");
-    return 0;
+}
