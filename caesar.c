@@ -30,13 +30,14 @@ else
         if(isalpha(text[i]))
         {
 
-               if(isupper(text[i]))
+             if(islower(text[i]))
             {
-           printf("%c", ((text[i] - 'A' + key) % 26) + 'A');
+                printf("%c", ((((text[i] - 97)+key)%26)+97));
             }
+
             else
             {
-                printf("%c", ((text[i] - 'a' + key) % 26) + 'a');
+                printf("%c", ((((text[i] - 65)+key)%26)+65));
             }
         }
         else
@@ -44,6 +45,7 @@ else
             printf("%c", text[i]);
         }
     }
+
     printf("\n");
     return 0;
 }
