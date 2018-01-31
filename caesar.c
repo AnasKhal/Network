@@ -43,18 +43,3 @@ int main(int argc, string argv[])
     printf("ciphertext: %s", ptext);
     printf("\n");
     return 0;
-}
-else{
-printf("%c",(char)c);
-}
-}
-}
-else{
-printf("%c",s[i]);
-}
-}
-printf("\n");
-
-}
-
-}
