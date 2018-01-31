@@ -6,6 +6,11 @@
 
 int main(int argc, string argv[])
 {
+    bool keySuccessful = false;
+    int key = 0;
+    int input_length = 0;
+    string text = "";
+
     if (argc != 2)
     {
         printf("Please provide a valid argument");
@@ -16,7 +21,7 @@ int main(int argc, string argv[])
 
      text = GetString();
     input_length = strlen(text);
-    for(int i = 0; i < input_length; i++)
+    for (int i = 0; i < input_length; i++)
     {
         if(isalpha(text[i]))
         {
