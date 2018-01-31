@@ -30,7 +30,7 @@ else
         if(isalpha(text[i]))
         {
 
-        else if(isupper(text[i]))
+               if(isupper(text[i]))
             {
            printf("%c", ((text[i] - 'A' + key) % 26) + 'A');
             }
