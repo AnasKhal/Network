@@ -4,68 +4,52 @@
 #include <ctype.h>
 
 
-int main(int argc, string argv[])
-{
+ int main(int argc, string argv[])
+ {
+    // check for 2 arguments only
     if (argc != 2)
     {
-        printf("INVALID\n");
+        printf("Error\n");
         return 1;
     }
 
-    string k = argv[1];
-
-    //check for whether all alphabetical keys
-
-    for(int i= 0; i < strlen(k); i++)
+    // check if argument is all alpha char (no punct) - use loop and isalpha
+    for (int i = 0; i < strlen(argv[1]); i++)
     {
-      if(!isalpha(k[i]))
-      {
-          printf("Theres an error\n");
-          return 1;
-      }
+        if (isalpha(argv[1][i]) == 0)
+        {
+            printf("Error\n");
+            return 1;
+        }
     }
 
-    int keyLen = strlen(k);
+    // prompt user for Word
+    string Word = GetString();
+    int j = 0;
 
-    printf("plaintext: ");
-
-    string p = get_string();
-
-    printf("ciphertext: ");
-
-    for(int i = 0,j = 0; i < strlen(p); i++)
+    // loop through the Word. If not a letter than print unmodified.
+    for (int i = 0, n = strlen(Word); i < n; i++)
     {
-      if(j == keyLen)
-      {
-        j = 0;
-      }
+        // to keep looping through the key continously
+        j = j % strlen(argv[1]);
 
-      int keyCon;
-
-      if(isupper(k[j]))
-      {
-        keyCon = k[j] - 65;
-      }
-      else
-      {
-        keyCon = k[j] - 97;
-      }
-
-
-        if(isupper(p[i]))
+        // check if the char is alpha
+        if (isalpha(Word[i]))
         {
-          printf("%c", ((((p[i] + (keyCon)) - 65) % 26) + 65));
+            // only 4 types of outcomes
+            if (islower(Word[i]) && islower(argv[1][j]))
+                printf("%c", (((Word[i] - 97) + (argv[1][j] - 97)) % 26) + 97);
+            else if (isupper(Word[i]) && islower(argv[1][j]))
+                printf("%c", (((Word[i] - 65) + (argv[1][j] - 97)) % 26) + 65);
+            else if (islower(Word[i]) && isupper(argv[1][j]))
+                printf("%c", (((Word[i] - 97) + (argv[1][j] - 65)) % 26) + 97);
+            else if (isupper(Word[i]) && isupper(argv[1][j]))
+                printf("%c", (((Word[i] - 65) + (argv[1][j] - 65)) % 26) + 65);
+            j++;
         }
-        else if(islower(p[i]))
+        else
         {
-          printf("%c", ((((p[i] + (keyCon)) - 97) % 26) + 97));
+            printf("%c", Word[i]);
         }
-        else{
-          printf("%c", p[i]);
-        }
-
-        j++;
     }
-          printf("\n");
-          return 0;
-}
+    printf("\n");
