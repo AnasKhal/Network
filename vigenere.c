@@ -1,74 +1,62 @@
-#include <stdio.h>
-#include <math.h>
-#include <string.h>
-#include <stdlib.h>
 #include <cs50.h>
+#include <stdio.h>
+#include <string.h>
 #include <ctype.h>
- int main(int argc, string argv[]){
-     if (argc < 2 || argc > 2){
-         printf("usage: ./vigenere <keyword> \n");
-         return 1;
-     }
-     string keyw = argv[1];
-     int u = strlen(keyw);
-     int key[u];
-     // generates encryptiion array
-     for (int i = 0; i<u; i++){
-         if (isalpha(keyw[i])){
-             if (islower(keyw[i])){
-                 key[i] = keyw[i]-97;
-             }
-             else {
-                 key[i] = keyw[i]-65;
-             }
-         }
-         else {
-            printf("usage: ./vigenere <keyword> \n");
-         return 1;
-         }
-     }
-     string cipher = GetString();
-     int k = strlen(cipher);
-     int crypt[k];
-     int symbol = 0;
-        for (int i = 0; i < k; i++){
-            // passes all symbols directly into the array
-         if ((90<cipher[i] && cipher[i]<97) || cipher[i]<65 || cipher[i]>122){
-         crypt[i]= cipher[i];
-         symbol++;
-         }
-         int change = 0;
+#include <stdlib.h>
 
-           if (symbol == 0){
-            change = key[i%u];
-           } else{
-            change = key[((i%u)-1-symbol)%u];
-           }
-         //checks for uppercase letters and encrypts them
-         if (64<cipher[i] && cipher[i]<91){
-          if ((90-cipher[i])<change){
-           int tp3= change - ((90-cipher[i])% change);
-           crypt[i]= (64+tp3);
-          }
-          else {
-           crypt[i]= (cipher[i]+change);
-          }
-         }
-          //checks for lowercase letters and encrypts them
-         else if (96<cipher[i] && cipher[i]<123){
-          if ((122-cipher[i])<change){
-           int tp2= change - ((122-cipher[i])% change);
-           crypt[i]= (96+tp2);
-          }
-          else {
-           crypt[i]= (cipher[i]+change);
-          }
-         }
-
-     }
-     for (int i =0; i < k; i++){
-        printf("%c", crypt[i]);
+int main(int argc, string argv[1])
+{
+    if (argc != 2)  //ensure user passes 2 cmd-line args
+    {
+        printf("Usage: ./caesar k\n");
+        return 1;   //if they don't pass 2 args, exit the program with error message 1
     }
-    printf("\n");
-     return 0;
+    for (int i = 0, n = strlen(argv[1]); i < n; i++)
+    {
+        if (!isalpha(argv[1][i]))
+        {
+            printf("Usage: ./vigenere k\n");
+            return 1;
+        }
+    }
+    printf("plaintext: ");
+    string p = get_string();    //get a string(key) from the user, store it in p
+    if (p != NULL)  //ensure p is not null
+    {
+        int j = 0;
+        string key = argv[1];
+        printf("ciphertext: ");
+        for (int i = 0, n = strlen(p); i < n; i++)  //iterate over the string p
+        {
+            if (isalpha(p[i]))    //if string p is alphabetic, continue
+            {
+                if (islower(p[i]) && islower(key[j]))    //if chars in p are lower & key is lower, print lower
+                {
+                    printf("%c", (p[i] - 97 + key[j] - 97) % 26 + 97);
+                    j++;
+                }
+                else if (isupper(p[i]) && isupper(key[j]))    //if chars in p are upper & key is lower, print upper
+                {
+                    printf("%c", (p[i] - 65 + key[j] - 65) % 26 + 65);
+                    j++;
+                }
+                else if (islower(p[i]) && isupper(key[j]))   //if chars in p are lower & key is upper, print lower
+                {
+                    printf("%c", (p[i] - 97 + key[j] - 65) % 26 + 97);
+                    j++;
+                }
+                else if (isupper(p[i]) && islower(key[j]))     //if chars in p are upper & key is lower, print upper
+                {
+                    printf("%c", (p[i] - 65 + key[j] - 97) % 26 + 65);
+                    j++;
+                }
+            }
+            else    //otherwise print special chars as is
+            {
+                printf("%c", p[i]);
+            }
+        }
+    }
+    printf("\n");   //print a newline and exit the program with code 0
+    return 0;
 }
