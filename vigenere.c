@@ -1,55 +1,74 @@
-#include <cs50.h>
 #include <stdio.h>
+#include <math.h>
 #include <string.h>
+#include <stdlib.h>
+#include <cs50.h>
 #include <ctype.h>
+ int main(int argc, string argv[]){
+     if (argc < 2 || argc > 2){
+         printf("usage: ./vigenere <keyword> \n");
+         return 1;
+     }
+     string keyw = argv[1];
+     int u = strlen(keyw);
+     int key[u];
+     // generates encryptiion array
+     for (int i = 0; i<u; i++){
+         if (isalpha(keyw[i])){
+             if (islower(keyw[i])){
+                 key[i] = keyw[i]-97;
+             }
+             else {
+                 key[i] = keyw[i]-65;
+             }
+         }
+         else {
+            printf("usage: ./vigenere <keyword> \n");
+         return 1;
+         }
+     }
+     string cipher = GetString();
+     int k = strlen(cipher);
+     int crypt[k];
+     int symbol = 0;
+        for (int i = 0; i < k; i++){
+            // passes all symbols directly into the array
+         if ((90<cipher[i] && cipher[i]<97) || cipher[i]<65 || cipher[i]>122){
+         crypt[i]= cipher[i];
+         symbol++;
+         }
+         int change = 0;
 
+           if (symbol == 0){
+            change = key[i%u];
+           } else{
+            change = key[((i%u)-1-symbol)%u];
+           }
+         //checks for uppercase letters and encrypts them
+         if (64<cipher[i] && cipher[i]<91){
+          if ((90-cipher[i])<change){
+           int tp3= change - ((90-cipher[i])% change);
+           crypt[i]= (64+tp3);
+          }
+          else {
+           crypt[i]= (cipher[i]+change);
+          }
+         }
+          //checks for lowercase letters and encrypts them
+         else if (96<cipher[i] && cipher[i]<123){
+          if ((122-cipher[i])<change){
+           int tp2= change - ((122-cipher[i])% change);
+           crypt[i]= (96+tp2);
+          }
+          else {
+           crypt[i]= (cipher[i]+change);
+          }
+         }
 
- int main(int argc, string argv[])
- {
-    // check for 2 arguments only
-    if (argc != 2)
-    {
-        printf("Error\n");
-        return 1;
-    }
-
-    // check if argument is all alpha char (no punct) - use loop and isalpha
-    for (int i = 0; i < strlen(argv[1]); i++)
-    {
-        if (isalpha(argv[1][i]) == 0)
-        {
-            printf("Error\n");
-            return 1;
-        }
-    }
-
-    // prompt user for Word
-    string Word = GetString();
-    int j = 0;
-
-    // loop through the Word. If not a letter than print unmodified.
-    for (int i = 0, n = strlen(Word); i < n; i++)
-    {
-        // to keep looping through the key continously
-        j = j % strlen(argv[1]);
-
-        // check if the char is alpha
-        if (isalpha(Word[i]))
-        {
-            // only 4 types of outcomes
-            if (islower(Word[i]) && islower(argv[1][j]))
-                printf("%c", (((Word[i] - 97) + (argv[1][j] - 97)) % 26) + 97);
-            else if (isupper(Word[i]) && islower(argv[1][j]))
-                printf("%c", (((Word[i] - 65) + (argv[1][j] - 97)) % 26) + 65);
-            else if (islower(Word[i]) && isupper(argv[1][j]))
-                printf("%c", (((Word[i] - 97) + (argv[1][j] - 65)) % 26) + 97);
-            else if (isupper(Word[i]) && isupper(argv[1][j]))
-                printf("%c", (((Word[i] - 65) + (argv[1][j] - 65)) % 26) + 65);
-            j++;
-        }
-        else
-        {
-            printf("%c", Word[i]);
-        }
+     }
+     for (int i =0; i < k; i++){
+        printf("%c", crypt[i]);
     }
     printf("\n");
+     return 0;
+}
