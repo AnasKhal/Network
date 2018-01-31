@@ -1,40 +1,48 @@
-#include<cs50.h>
-#include<stdio.h>
-#include<string.h>
-#include<stdlib.h>
-#include<ctype.h>
+#include <cs50.h>
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#include <stdlib.h>
 
-int main(int argc,string argv[])
+int main(int argc, string argv[])
 {
-                int c;
-            if(argc!=2){
-printf("error\n");
-return 1;
-}
+    if (argc != 2)
+    {
+        return 1;
+    }
 
-else{
-int k=atoi(argv[1]);
-string s=GetString();
-for(int i=0,n=strlen(s);i<n;i++){
-if(isalpha(s[i]))
-{
-if(isupper(s[i])){
-k=k%26;
- c=s[i]+k;
- if(c>90){
- c=(c-90)+64;
- printf("%c",(char)c);
- }
- else{
-printf("%c",(char)c);
-}
-}
-else{
-k=k%26;
- c=s[i]+k;
-if(c>122){
-c=(c-122)+96;
-printf("%c",(char)c);
+    int x = atoi(argv[1]);
+    //printf("integer is %i\n", x);
+
+    printf("plaintext: ");
+    string ptext = get_string();
+    //printf("text is: %s\n", ptext);
+
+    for (int i = 0, n = strlen(ptext); i < n; i++)
+    {
+        if (ptext[i] == ' ')
+        {
+            ptext[i] = ptext[i];
+        }
+        else if (isalpha(ptext[i]))
+        {
+            if (isupper(ptext[i]))
+            {
+                ptext[i] = (ptext[i] - 65 + x) % 26 + 65;
+            }
+             if (islower(ptext[i]))
+            {
+                ptext[i] = (ptext[i] - 97 + x) % 26 + 97;
+            }
+        }
+        else
+        {
+            ptext[i] = ptext[i];
+        }
+    }
+    printf("ciphertext: %s", ptext);
+    printf("\n");
+    return 0;
 }
 else{
 printf("%c",(char)c);
