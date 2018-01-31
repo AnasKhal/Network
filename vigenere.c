@@ -20,57 +20,52 @@ int main(int argc, string argv[])
     {
       if(!isalpha(k[i]))
       {
-          printf("Not all alphabetical\n");
-          return -1;
+          printf("Theres an error\n");
+          return 1;
       }
     }
-      string plain = GetString();
-      int counter = 0;
-      char c = 'a';
-      int goo = 0; //for doing ascii math in loop later
-      for (int r=0; r<strlen(plain); r++){
 
-    if (!isalpha(plain[r])){
-        counter++;
-        printf("%c", plain[r]); //print element if its a not a letter
+    int keyLen = strlen(k);
+
+    printf("plaintext: ");
+
+    string p = get_string();
+
+    printf("ciphertext: ");
+
+    for(int i = 0,j = 0; i < strlen(p); i++)
+    {
+      if(j == keyLen)
+      {
+        j = 0;
+      }
+
+      int keyCon;
+
+      if(isupper(k[j]))
+      {
+        keyCon = k[j] - 65;
+      }
+      else
+      {
+        keyCon = k[j] - 97;
+      }
+
+
+        if(isupper(p[i]))
+        {
+          printf("%c", ((((p[i] + (keyCon)) - 65) % 26) + 65));
+        }
+        else if(islower(p[i]))
+        {
+          printf("%c", ((((p[i] + (keyCon)) - 97) % 26) + 97));
+        }
+        else{
+          printf("%c", p[i]);
+        }
+
+        j++;
     }
-    else{
-        //initialize
-        int z = plain[r]; //convert to number
-        int t = ((r - counter)%strlen(k)); //helps cycle through smaller passcode, remembers spot
-        int y = k[t]; //T is for placeholder of key code relative to R for plaintext
-
-
-        if (isupper(plain[r])){
-            if(isupper(k[t])){
-                goo = ((((z-65)+(y-65))%26)+65); //goes by plain value
-                c = goo;
-                printf("%c", c);
-
-            }
-            else{
-                 goo = ((((z-65)+(y-97))%26)+65);
-                 c = goo;
-                printf("%c", c);
-            }
-
-
-        }
-        if (islower(plain[r])){
-            if(isupper(k[t])){
-                goo = ((((z-97)+(y-65))%26)+97);
-                c = goo;
-                printf("%c", c);
-
-            }
-            else{
-                goo = ((((z-97)+(y-97))%26)+97);
-                c = goo;
-                printf("%c", c);
-            }
-        }
-}
-}
-printf("\n");
-return 0;
+          printf("\n");
+          return 0;
 }
