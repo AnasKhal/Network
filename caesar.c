@@ -11,17 +11,21 @@ int main(int argc, string argv[])
     int input_length = 0;
     string text = "";
 
-    if (argc != 2)
-    {
-        printf("Please provide a valid argument");
-        return 1;
+    if(argc != 2)
+        {
+            printf("Please provide a command line argument.\n");
+            return 1;
     }
+else
+{
+    key = atoi(argv[1]);
+    keycorrect = true;
+}
+    } while(!keycorrect);
 
-    int key = atoi(argv[1]);
-
-     text = GetString();
+    text = GetString();
     input_length = strlen(text);
-    for (int i = 0; i < input_length; i++)
+    for(int i = 0; i < input_length; i++)
     {
         if(isalpha(text[i]))
         {
