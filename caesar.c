@@ -21,9 +21,9 @@ int main(int argc, string argv[])
         if(isalpha(text[i]))
         {
 
-        else if(islower(text[i]))
+        else if(isupper(text[i]))
             {
-           printf("%c", ((text[i] - 'a' + key) % 26) + 'A');
+           printf("%c", ((text[i] - 'A' + key) % 26) + 'A');
             }
             else
             {
