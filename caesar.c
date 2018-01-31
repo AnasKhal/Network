@@ -14,9 +14,9 @@ int main(int argc, string argv[])
 
     int key = atoi(argv[1]);
 
-    string text = GetString();
-
-    for (int i = 0, n = strlen(text); i < n; i++)
+     text = GetString();
+    input_length = strlen(text);
+    for(int i = 0; i < input_length; i++)
     {
         if(isalpha(text[i]))
         {
